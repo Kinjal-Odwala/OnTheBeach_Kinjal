@@ -1,0 +1,119 @@
+﻿@model OnTheBeachTest.Models.Jobs
+
+@{
+    ViewBag.Title = "Jobs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .sample{
+    border:1px solid black;
+    width:80px;
+    text-align:center;
+    padding:10px;
+    margin-bottom:5px;
+}
+</style>
+<h2>Jobs</h2>
+
+
+@using (Html.BeginForm("Jobs","Job",FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-horizontal col-md-8">
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.InputValue, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(model => model.InputValue, new { cols=135,@rows=10, id="inputID", @droppable = "true" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Output">Output :</label>
+            <div class="col-md-6">
+                <label class="control-label" id="Output">@ViewBag.Output</label>
+            </div>
+        </div>
+
+    </div>
+}
+
+<div class="form-horizontal  col-md-4" style="margin-top:-50px;">
+    <h4>Please click on some sample Input to test</h4>
+    <div id="input1" onclick="copy(this)" class="sample">
+        <span>
+            a =>
+        </span>
+    </div>
+    <div id="input2" onclick="copy(this)" class="sample">
+        <span>
+            a =></br>
+            b =></br>
+            c =>
+        </span>
+    </div>
+    <div id="input3" onclick="copy(this)" class="sample">
+        <span>
+            a =></br>
+            b =>c</br>
+            c =>
+        </span>
+    </div>
+    <div id="input4" onclick="copy(this)" class="sample">
+        <span>
+            a =></br>
+            b => c</br>
+            c => f</br>
+            d => a</br>
+            e => b</br>
+            f =>
+        </span>
+    </div>
+    <div id="input5" onclick="copy(this)" class="sample">
+        <span>
+            a =></br>
+            b =></br>
+            c => c</br>
+        </span>
+    </div>
+    <div id="input6" onclick="copy(this)" class="sample">
+        <span>
+            a =></br>
+            b => c</br>
+            c => f</br>
+            d => a</br>
+            e =></br>
+            f => b
+        </span>
+    </div>
+ 
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+<script type="text/javascript">
+    function copy(e) {
+        var text = $(e).attr('id');
+        if (text == 'input1')
+            $('#inputID').text("a=>");
+        if (text == 'input2')
+            $('#inputID').text("a=>\nb=>\nc=>");
+        if (text == 'input3')
+            $('#inputID').text("a=>\nb=>c\nc=>");
+        if (text == 'input4')
+            $('#inputID').text("a=>\nb=>c\nc=>f\nd=>a\ne=>b\nf=>");
+        if (text == 'input5')
+            $('#inputID').text("a=>\nb=>\nc=>c");
+        if (text == 'input6')
+            $('#inputID').text("a=>\nb=>c\nc=>f\nd=>a\ne=>\nf=>b");
+    }
+</script>
